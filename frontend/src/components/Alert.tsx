@@ -49,5 +49,3 @@ const Alert: React.FC<AlertProps> = ({ type, message, onClose }) => {
 };
 
 export default Alert;
-
-export default Alert;
