@@ -133,34 +133,3 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-            >
-              Sign In
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-px bg-gray-400"></div>
-            <span className="text-dark text-sm">New to SmartVote?</span>
-            <div className="flex-1 h-px bg-gray-400"></div>
-          </div>
-
-          {/* Register Link */}
-          <Link
-            to="/register"
-            className="neomorph-btn w-full text-text hover:text-accent font-bold text-lg block text-center transform hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-200 to-cyan-200"
-          >
-            Create Account
-          </Link>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-dark text-sm">SmartVote System | Secure Voting Platform</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default LoginPage;

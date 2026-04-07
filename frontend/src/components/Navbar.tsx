@@ -90,36 +90,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-              {/* Logout Button */}
-              <button
-                onClick={handleLogout}
-                className="neomorph-btn text-text hover:text-accent font-bold py-2 px-5 transform hover:scale-105 transition-all duration-300 bg-gradient-to-br from-red-200 to-pink-200"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              {/* Auth Links */}
-              <Link
-                to="/login"
-                className="neomorph-btn text-text hover:text-accent font-bold py-2 px-5 hidden sm:inline-block transform hover:scale-105 transition-all duration-300"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="neomorph-btn bg-gradient-to-br from-blue-200 to-cyan-200 text-text hover:text-accent font-bold py-2 px-5 transform hover:scale-105 transition-all duration-300"
-              >
-                Register
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar;

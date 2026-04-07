@@ -157,9 +157,3 @@ const VotingPage: React.FC = () => {
 };
 
 export default VotingPage;
-      </div>
-    </div>
-  );
-};
-
-export default VotingPage;
