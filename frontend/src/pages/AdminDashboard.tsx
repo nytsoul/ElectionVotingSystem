@@ -246,7 +246,7 @@ const AdminDashboard: React.FC = () => {
                   onChange={(e) => setNewCandidate({ ...newCandidate, symbol: e.target.value })}
                   className="dark-input"
                   placeholder="e.g., 🎭 🌟 ⚡"
-                  maxLength="2"
+                  maxLength={2}
                 />
               </div>
             </div>

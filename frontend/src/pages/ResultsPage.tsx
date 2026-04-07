@@ -102,7 +102,7 @@ const ResultsPage: React.FC = () => {
                       className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-500 shadow-neon flex items-center justify-center text-white font-bold text-xs"
                       style={{ width: `${percentage}%` }}
                     >
-                      {percentage > 10 && `${percentage}%`}
+                      {Number(percentage) > 10 && `${percentage}%`}
                     </div>
                   </div>
                 </div>
