@@ -31,53 +31,111 @@ const LandingPage: React.FC = () => {
   }, [isAuthenticated, user, navigate]);
 
   return (
-    <div className="neomorph-container">
-      {/* Header */}
-      <div className="flex justify-between items-center px-8 py-6">
-        <div className="flex items-center gap-3">
-          <div className="text-5xl">🗳️</div>
-          <h1 className="text-3xl font-bold text-text">SmartVote</h1>
-        </div>
-      </div>
-
+    <div className="dark-container">
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] px-4 py-12">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16 max-w-3xl">
-          <h2 className="text-5xl md:text-6xl font-bold text-text mb-6 leading-tight">
-            Secure & Transparent Voting
+          {/* Animated Title */}
+          <div className="mb-8 animate-fade-in">
+            <div className="text-7xl md:text-9xl mb-4">🗳️</div>
+          </div>
+
+          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            Smart<span className="neon-accent">Vote</span>
           </h2>
-          <p className="text-xl text-dark mb-8 leading-relaxed">
+          
+          <p className="text-xl md:text-2xl text-cyan-300 mb-8 leading-relaxed font-medium">
+            ✨ Secure. Transparent. Democratic. ✨
+          </p>
+
+          <p className="text-lg text-slate-300 mb-12 leading-relaxed">
             Participate in democracy with confidence. SmartVote provides secure, transparent, and easy voting for your organization.
           </p>
 
           {/* Election Status Card */}
-          <div className={`neomorph-card mb-12 transform transition-all duration-300 hover:scale-105 ${
-            electionStatus === 'Live' ? 'bg-gradient-to-br from-green-200 to-emerald-200' : 'bg-gradient-to-br from-red-200 to-rose-200'
-          }`}>
-            <div className="flex items-center justify-center gap-4">
-              <span className="text-6xl">{electionStatus === 'Live' ? '🟢' : '🔴'}</span>
+          <div className={`dark-card mb-12 transform transition-all duration-300 ${
+            electionStatus === 'Live' ? 'bg-gradient-to-br from-green-900/30 to-emerald-900/30 border-green-500/50' : 'bg-gradient-to-br from-red-900/30 to-rose-900/30 border-red-500/50'
+          } border`}>
+            <div className="flex items-center justify-center gap-6">
+              <span className="text-7xl animate-pulse">{electionStatus === 'Live' ? '🟢' : '🔴'}</span>
               <div className="text-left">
-                <p className="text-sm text-dark">Election Status</p>
-                <p className="text-3xl font-bold text-text">{electionStatus === 'Live' ? 'LIVE' : 'CLOSED'}</p>
+                <p className="text-sm text-slate-400 uppercase tracking-widest">Election Status</p>
+                <p className={`text-4xl font-bold ${electionStatus === 'Live' ? 'text-green-400 neon-accent' : 'text-red-400'}`}>
+                  {electionStatus === 'Live' ? '🟢 LIVE' : '⏸️ CLOSED'}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-5xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 max-w-5xl w-full">
           {/* Feature 1 */}
-          <div className="neomorph-card group hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-            <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform">🔐</div>
-            <h3 className="text-2xl font-bold text-text mb-3">Secure</h3>
-            <p className="text-dark">Login with your unique Voter ID. Your data is encrypted and protected.</p>
+          <div className="dark-card group hover:shadow-neon transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50">
+            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🔐</div>
+            <h3 className="text-2xl font-bold text-white mb-3">Secure</h3>
+            <p className="text-slate-300">Login with your unique Voter ID. Your data is encrypted and protected with military-grade security.</p>
           </div>
 
           {/* Feature 2 */}
-          <div className="neomorph-card group hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
-            <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform">✨</div>
-            <h3 className="text-2xl font-bold text-text mb-3">Simple</h3>
+          <div className="dark-card group hover:shadow-neon transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50">
+            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">✨</div>
+            <h3 className="text-2xl font-bold text-white mb-3">Simple</h3>
+            <p className="text-slate-300">Intuitive interface designed for everyone. Cast your vote in just a few clicks with our streamlined process.</p>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="dark-card group hover:shadow-neon transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50">
+            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">📊</div>
+            <h3 className="text-2xl font-bold text-white mb-3">Transparent</h3>
+            <p className="text-slate-300">Real-time results and detailed statistics. See how the election progresses as votes are recorded.</p>
+          </div>
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col md:flex-row gap-6 mb-16">
+          <Link
+            to="/register"
+            className="dark-btn px-10 py-4 text-lg font-bold transform hover:scale-105 transition-transform shadow-neon hover:shadow-neon-lg"
+          >
+            📝 Create Account
+          </Link>
+          <Link
+            to="/login"
+            className="px-10 py-4 text-lg font-bold rounded-xl border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 transition-all"
+          >
+            🔐 Sign In
+          </Link>
+          <Link
+            to="/results"
+            className="px-10 py-4 text-lg font-bold rounded-xl border-2 border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 transition-all"
+          >
+            📊 View Results
+          </Link>
+        </div>
+
+        {/* Footer Stats */}
+        <div className="grid grid-cols-3 gap-8 max-w-2xl w-full text-center">
+          <div className="dark-card py-6">
+            <p className="text-4xl font-bold text-cyan-400">247</p>
+            <p className="text-slate-400 mt-2">Registered Voters</p>
+          </div>
+          <div className="dark-card py-6">
+            <p className="text-4xl font-bold text-green-400">12</p>
+            <p className="text-slate-400 mt-2">Candidates</p>
+          </div>
+          <div className="dark-card py-6">
+            <p className="text-4xl font-bold text-purple-400">100%</p>
+            <p className="text-slate-400 mt-2">Secure</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LandingPage;
             <p className="text-dark">Vote for your candidate with just one click. No complicated steps.</p>
           </div>
 

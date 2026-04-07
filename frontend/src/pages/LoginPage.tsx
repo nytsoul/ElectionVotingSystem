@@ -41,23 +41,23 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="neomorph-container flex items-center justify-center min-h-screen px-4 py-12">
+    <div className="dark-container flex items-center justify-center min-h-screen px-4 py-12">
       <div className="w-full max-w-md">
         {/* Back Button */}
-        <Link to="/" className="inline-flex items-center gap-2 text-dark hover:text-text font-semibold mb-8 transition-colors">
-          <span className="text-2xl">←</span>
-          <span>Back</span>
+        <Link to="/" className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-semibold mb-8 transition-colors text-lg">
+          <span className="text-2xl">⬅️</span>
+          <span>Back to Home</span>
         </Link>
 
         {/* Card */}
-        <div className="neomorph-card">
+        <div className="dark-card">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-block p-4 rounded-2xl mb-4 neomorph-badge">
-              <span className="text-4xl">🔐</span>
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 mb-6 shadow-neon mx-auto">
+              <span className="text-5xl">🔐</span>
             </div>
-            <h1 className="text-3xl font-bold text-text mb-2">Welcome Back</h1>
-            <p className="text-dark">Sign in to cast your vote</p>
+            <h1 className="text-4xl font-bold text-white mb-2 neon-accent">Welcome Back!</h1>
+            <p className="text-slate-400 text-lg">Sign in to cast your vote</p>
           </div>
 
           {error && <Alert type="error" message={error} onClose={() => setError('')} />}
@@ -66,29 +66,29 @@ const LoginPage: React.FC = () => {
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Voter ID Field */}
             <div>
-              <label className="block text-text font-semibold mb-3 text-sm uppercase tracking-wide">
-                Voter ID
+              <label className="block text-white font-bold mb-3 text-sm uppercase tracking-widest">
+                🆔 Voter ID
               </label>
               <input
                 type="text"
                 value={voter_id}
                 onChange={(e) => setVoterId(e.target.value)}
-                className="neomorph-input text-text"
-                placeholder="Enter your voter ID"
+                className="dark-input"
+                placeholder="Enter your Voter ID"
                 required
               />
             </div>
 
             {/* Password Field */}
             <div>
-              <label className="block text-text font-semibold mb-3 text-sm uppercase tracking-wide">
-                Password
+              <label className="block text-white font-bold mb-3 text-sm uppercase tracking-widest">
+                🔑 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="neomorph-input text-text"
+                className="dark-input"
                 placeholder="Enter your password"
                 required
               />
@@ -97,7 +97,42 @@ const LoginPage: React.FC = () => {
             {/* Login Button */}
             <button
               type="submit"
-              className="neomorph-btn w-full text-text hover:text-accent font-bold text-lg mt-8 transform hover:scale-105 transition-all duration-300"
+              disabled={loading}
+              className="dark-btn w-full text-slate-900 font-bold text-lg mt-8 transform hover:scale-105 transition-all duration-300 disabled:opacity-50"
+            >
+              {loading ? '⏳ Signing in...' : '✅ Sign In'}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="my-8 flex items-center gap-4">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-cyan-500/30"></div>
+            <span className="text-slate-400">OR</span>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-cyan-500/30"></div>
+          </div>
+
+          {/* Register Link */}
+          <p className="text-center text-slate-400">
+            Don't have an account?{' '}
+            <Link
+              to="/register"
+              className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+            >
+              📝 Register here
+            </Link>
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-slate-500 mt-8 text-sm">
+          ✨ Your vote matters. Make it count!
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;
             >
               Sign In
             </button>

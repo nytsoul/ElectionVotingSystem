@@ -25,7 +25,7 @@ const VotingPage: React.FC = () => {
 
   useEffect(() => {
     if (user?.has_voted) {
-      setError('You have already voted');
+      setError('❌ You have already voted');
       setTimeout(() => navigate('/vote-done'), 2000);
     }
 
@@ -34,7 +34,7 @@ const VotingPage: React.FC = () => {
         const response = await votingService.getCandidates();
         setCandidates(response.data);
       } catch (err) {
-        setError('Failed to load candidates');
+        setError('❌ Failed to load candidates');
       } finally {
         setLoading(false);
       }
@@ -61,7 +61,7 @@ const VotingPage: React.FC = () => {
         navigate('/vote-done');
       }, 2000);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to submit vote');
+      setError(err.response?.data?.error || '❌ Failed to submit vote');
     } finally {
       setLoading(false);
     }
@@ -72,14 +72,18 @@ const VotingPage: React.FC = () => {
   }
 
   return (
-    <div className="neomorph-container min-h-screen py-12 px-4">
+    <div className="dark-container min-h-screen py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-text mb-3 flex items-center justify-center gap-3">
-            <span className="text-6xl">🗳️</span> Cast Your Vote
+        <div className="text-center mb-16">
+          <h1 className="text-6xl md:text-7xl font-bold text-white mb-4 flex items-center justify-center gap-4">
+            <span className="text-7xl md:text-8xl">🗳️</span>
+            <span className="neon-accent">Cast Your Vote</span>
           </h1>
-          <p className="text-dark text-lg">Select your preferred candidate and submit your vote</p>
+          <p className="text-xl text-slate-400 font-medium">
+            ✨ Select your preferred candidate and submit your vote ✨
+          </p>
+          <p className="text-sm text-slate-500 mt-3">Remember: You can only vote once!</p>
         </div>
 
         {success && <Alert type="success" message={success} onClose={() => setSuccess('')} />}
@@ -90,42 +94,69 @@ const VotingPage: React.FC = () => {
           {candidates.map((candidate) => (
             <div
               key={candidate.id}
-              className="neomorph-card group hover:shadow-lg transition-all duration-300 hover:-translate-y-3 overflow-hidden"
+              className="dark-card group hover:shadow-neon hover:border-cyan-400/50 transition-all duration-300 hover:-translate-y-3 overflow-hidden cursor-pointer"
+              onClick={() => handleVoteClick(candidate.id)}
             >
               {/* Candidate Symbol */}
-              <div className="text-center mb-6 transform group-hover:scale-110 transition-transform">
-                <div className="text-7xl mb-4">{candidate.symbol || '🎭'}</div>
+              <div className="text-center mb-8 transform group-hover:scale-125 transition-transform duration-300">
+                <div className="text-8xl md:text-9xl filter group-hover:drop-shadow-lg">
+                  {candidate.symbol || '🎭'}
+                </div>
               </div>
 
               {/* Candidate Info */}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-text mb-2">{candidate.name}</h3>
-                <p className="text-dark font-semibold text-lg">{candidate.party}</p>
+              <div className="text-center mb-8">
+                <h3 className="text-3xl font-bold text-white mb-3 group-hover:neon-accent transition-colors">
+                  {candidate.name}
+                </h3>
+                <div className="inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
+                  <p className="text-cyan-300 font-bold text-lg">🏛️ {candidate.party}</p>
+                </div>
               </div>
 
               {/* Vote Button */}
               <button
                 onClick={() => handleVoteClick(candidate.id)}
-                className="neomorph-btn w-full text-text hover:text-accent font-bold text-lg transform hover:scale-105 transition-all duration-300 bg-gradient-to-br from-green-200 to-emerald-200 mt-4"
+                className="dark-btn w-full text-slate-900 font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-neon hover:shadow-neon-lg"
               >
-                Vote for {candidate.name}
+                ✅ Vote for {candidate.name}
               </button>
+
+              {/* Selection Indicator */}
+              {selectedCandidateId === candidate.id && (
+                <div className="absolute inset-0 border-2 border-cyan-400 rounded-2xl pointer-events-none">
+                  <div className="absolute top-4 right-4 text-2xl animate-pulse">✨</div>
+                </div>
+              )}
             </div>
           ))}
+        </div>
+
+        {/* Stats Footer */}
+        <div className="dark-card text-center">
+          <p className="text-slate-300">
+            🎯 You're selecting one of <span className="text-cyan-400 font-bold text-lg">{candidates.length}</span> candidates
+          </p>
         </div>
 
         {/* Confirmation Modal */}
         <ConfirmModal
           isOpen={showConfirm}
-          title="Confirm Your Vote"
+          title="⚠️ Confirm Your Vote"
           message={`Are you sure you want to vote for ${
             candidates.find((c) => c.id === selectedCandidateId)?.name
-          }? You can only vote once.`}
+          }? ✏️ Remember: You can only vote ONCE and cannot change your vote later.`}
           onConfirm={handleConfirmVote}
           onCancel={() => setShowConfirm(false)}
-          confirmText="Yes, Vote"
-          cancelText="Cancel"
+          confirmText="✅ Yes, Vote"
+          cancelText="❌ Cancel"
         />
+      </div>
+    </div>
+  );
+};
+
+export default VotingPage;
       </div>
     </div>
   );

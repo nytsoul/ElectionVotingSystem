@@ -33,13 +33,13 @@ const RegisterPage: React.FC = () => {
 
     // Validation
     if (parseInt(formData.age) < 18) {
-      setError('You must be 18 years or older to register.');
+      setError('❌ You must be 18 years or older to register.');
       setLoading(false);
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.');
+      setError('❌ Passwords do not match.');
       setLoading(false);
       return;
     }
@@ -52,12 +52,12 @@ const RegisterPage: React.FC = () => {
         password: formData.password,
       });
 
-      setSuccess('Registration Successful! Redirecting to login...');
+      setSuccess('✅ Registration Successful! Redirecting to login...');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed.');
+      setError(err.response?.data?.error || '❌ Registration failed.');
     } finally {
       setLoading(false);
     }
@@ -68,23 +68,23 @@ const RegisterPage: React.FC = () => {
   }
 
   return (
-    <div className="neomorph-container flex items-center justify-center min-h-screen px-4 py-12">
+    <div className="dark-container flex items-center justify-center min-h-screen px-4 py-12">
       <div className="w-full max-w-md">
         {/* Back Button */}
-        <Link to="/" className="inline-flex items-center gap-2 text-dark hover:text-text font-semibold mb-8 transition-colors">
-          <span className="text-2xl">←</span>
-          <span>Back</span>
+        <Link to="/" className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-semibold mb-8 transition-colors text-lg">
+          <span className="text-2xl">⬅️</span>
+          <span>Back to Home</span>
         </Link>
 
         {/* Card */}
-        <div className="neomorph-card">
+        <div className="dark-card">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-block p-4 rounded-2xl mb-4 neomorph-badge">
-              <span className="text-4xl">📝</span>
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 mb-6 shadow-neon mx-auto">
+              <span className="text-5xl">📝</span>
             </div>
-            <h1 className="text-3xl font-bold text-text mb-2">Create Account</h1>
-            <p className="text-dark">Join SmartVote and participate</p>
+            <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
+            <p className="text-slate-400 text-lg">Join SmartVote today! 🗳️</p>
           </div>
 
           {error && <Alert type="error" message={error} onClose={() => setError('')} />}
@@ -94,10 +94,124 @@ const RegisterPage: React.FC = () => {
           <form onSubmit={handleRegister} className="space-y-5">
             {/* Full Name Field */}
             <div>
-              <label className="block text-text font-semibold mb-3 text-sm uppercase tracking-wide">
-                Full Name
+              <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
+                👤 Full Name
               </label>
               <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="dark-input"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            {/* Age Field */}
+            <div>
+              <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
+                🎂 Age
+              </label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                className="dark-input"
+                placeholder="Must be 18 or older"
+                required
+                min="18"
+              />
+            </div>
+
+            {/* Voter ID Field */}
+            <div>
+              <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
+                🆔 Voter ID
+              </label>
+              <input
+                type="text"
+                name="voter_id"
+                value={formData.voter_id}
+                onChange={handleChange}
+                className="dark-input"
+                placeholder="Enter your unique Voter ID"
+                required
+              />
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
+                🔑 Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="dark-input"
+                placeholder="Create a strong password"
+                required
+              />
+            </div>
+
+            {/* Confirm Password Field */}
+            <div>
+              <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
+                🔒 Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="dark-input"
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+
+            {/* Register Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="dark-btn w-full text-slate-900 font-bold text-lg mt-8 transform hover:scale-105 transition-all duration-300 disabled:opacity-50"
+            >
+              {loading ? '⏳ Creating Account...' : '✅ Create Account'}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="my-8 flex items-center gap-4">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-purple-500/30"></div>
+            <span className="text-slate-400">OR</span>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-purple-500/30"></div>
+          </div>
+
+          {/* Login Link */}
+          <p className="text-center text-slate-400">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+            >
+              🔐 Sign In
+            </Link>
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-slate-500 mt-8 text-sm">
+          🔒 Your data is secure and encrypted.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterPage;
                 type="text"
                 name="name"
                 value={formData.name}
