@@ -42,6 +42,13 @@ const Navbar: React.FC = () => {
                   📊 Results
                   <span className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full transition-all duration-300"></span>
                 </Link>
+                <Link
+                  to="/verify"
+                  className="text-cyan-400 hover:text-cyan-300 font-semibold transition-all text-lg duration-300 relative group"
+                >
+                  🔍 Verify
+                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full transition-all duration-300"></span>
+                </Link>
                 {user?.role === 'admin' && (
                   <Link
                     to="/admin"

@@ -53,12 +53,22 @@ const VotingPage: React.FC = () => {
 
     try {
       setLoading(true);
-      await votingService.submitVote(selectedCandidateId);
+      const response = await votingService.submitVote(selectedCandidateId);
+      const verificationToken = response.data?.verification_token;
+      const candidateName = candidates.find((c) => c.id === selectedCandidateId)?.name;
+      const candidateSymbol = candidates.find((c) => c.id === selectedCandidateId)?.symbol;
+
       setSuccess('✅ Vote submitted successfully!');
       setShowConfirm(false);
 
       setTimeout(() => {
-        navigate('/vote-done');
+        navigate('/vote-done', {
+          state: {
+            verificationToken,
+            candidateName,
+            candidateSymbol,
+          },
+        });
       }, 2000);
     } catch (err: any) {
       setError(err.response?.data?.error || '❌ Failed to submit vote');

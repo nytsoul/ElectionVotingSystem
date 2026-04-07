@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import VotingPage from './pages/VotingPage';
 import VoteDonePage from './pages/VoteDonePage';
+import VerifyVotePage from './pages/VerifyVotePage';
 import ResultsPage from './pages/ResultsPage';
 import AdminDashboard from './pages/AdminDashboard';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify" element={<VerifyVotePage />} />
 
           {/* Protected Routes */}
           <Route

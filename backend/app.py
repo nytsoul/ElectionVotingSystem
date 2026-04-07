@@ -6,6 +6,8 @@ import os
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
+import secrets
+import hashlib
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -213,10 +215,14 @@ def vote(current_user):
         if not election_response.data:
             return jsonify({'error': 'Election is closed'}), 403
         
-        # Record the vote
+        # Generate unique verification token
+        verification_token = secrets.token_hex(16)
+        
+        # Record the vote with verification token
         vote_response = supabase.table('votes').insert({
             'user_id': user_id,
             'candidate_id': data['candidate_id'],
+            'verification_token': verification_token,
             'voted_at': datetime.utcnow().isoformat()
         }).execute()
         
@@ -225,6 +231,7 @@ def vote(current_user):
         
         return jsonify({
             'message': 'Vote submitted successfully',
+            'verification_token': verification_token,
             'vote': vote_response.data[0] if vote_response.data else None
         }), 201
     
@@ -244,6 +251,62 @@ def get_vote_status(current_user, user_id):
         return jsonify({
             'has_voted': user['has_voted'],
             'message': 'You have already voted' if user['has_voted'] else 'You can vote'
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Vote Verification Routes
+@app.route('/api/voting/verify', methods=['GET'])
+def verify_vote():
+    """Verify a vote using verification token"""
+    try:
+        token = request.args.get('token')
+        
+        if not token:
+            return jsonify({'error': 'Verification token is required'}), 400
+        
+        # Find vote by verification token
+        vote_response = supabase.table('votes').select('*, candidates(name, party, symbol)').eq('verification_token', token).execute()
+        
+        if not vote_response.data:
+            return jsonify({'error': 'Invalid verification token'}), 404
+        
+        vote = vote_response.data[0]
+        candidate = vote.get('candidates', {})
+        
+        return jsonify({
+            'message': 'Vote verified successfully',
+            'verified': True,
+            'candidate_name': candidate.get('name', 'Unknown'),
+            'candidate_party': candidate.get('party', 'Unknown'),
+            'candidate_symbol': candidate.get('symbol', ''),
+            'voted_at': vote.get('voted_at'),
+            'token': token
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/voting/verification-status/<token>', methods=['GET'])
+@token_required
+def check_verification_status(current_user, token):
+    """Check if a verification token exists and is valid"""
+    try:
+        vote_response = supabase.table('votes').select('*, candidates(name, party)').eq('verification_token', token).execute()
+        
+        if not vote_response.data:
+            return jsonify({'verified': False, 'message': 'Token not found'}), 404
+        
+        vote = vote_response.data[0]
+        candidate = vote.get('candidates', {})
+        
+        return jsonify({
+            'verified': True,
+            'message': 'Vote is recorded in the system',
+            'candidate_name': candidate.get('name'),
+            'candidate_party': candidate.get('party'),
+            'voted_at': vote.get('voted_at')
         }), 200
     
     except Exception as e:

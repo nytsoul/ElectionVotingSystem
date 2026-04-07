@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS votes (
   id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   candidate_id BIGINT NOT NULL REFERENCES candidates(id) ON DELETE CASCADE,
+  verification_token VARCHAR(255) UNIQUE NOT NULL,
   voted_at TIMESTAMP DEFAULT NOW(),
   UNIQUE(user_id)
 );
@@ -52,6 +53,7 @@ CREATE TABLE IF NOT EXISTS votes (
 CREATE INDEX IF NOT EXISTS idx_votes_user_id ON votes(user_id);
 CREATE INDEX IF NOT EXISTS idx_votes_candidate_id ON votes(candidate_id);
 CREATE INDEX IF NOT EXISTS idx_votes_voted_at ON votes(voted_at);
+CREATE INDEX IF NOT EXISTS idx_votes_verification_token ON votes(verification_token);
 
 -- ============================================
 -- 4. ELECTIONS TABLE
