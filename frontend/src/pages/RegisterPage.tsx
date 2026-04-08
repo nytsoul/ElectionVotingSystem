@@ -128,7 +128,7 @@ const RegisterPage: React.FC = () => {
             {/* Voter ID Field */}
             <div>
               <label className="block text-white font-bold mb-2 text-sm uppercase tracking-widest">
-                🆔 Voter ID
+                � Voter ID
               </label>
               <input
                 type="text"
